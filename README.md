@@ -40,5 +40,98 @@ To have at least have a visual idea of what the dataframe looks like, I called i
 ```python
 df
 ```
-And you have as output is this dataframe of size 9994 rows × 21 columns i.e 9994 instances of record, with 21 variables sprawled across the columns. A sneak peak below:
-![]()
+And what you have as output is this dataframe of size 9994 rows × 21 columns i.e 9994 instances of record, with 21 variables sprawled across the columns. A sneak peak below:
+![](dataframe.png)
+
+Next, I checked out the data types of what I've got.
+df.dtypes
+
+## Data Cleaning
+Next is to roll up our sleeves and make our data less dirty. But first, let's even check if the data is dirty at all. So to that,
+
+1. Check for missing values
+```python
+df.isnull().sum()
+```
+Turns out the data contained no missing value.
+
+2. Convert the date column to date data type.
+```python
+df['order_date'] = pd.to_datetime(df['order_date'])
+```
+## Analysis and Insights
+
+1. Sales distribution: To explore the distribution of sales across the range of products of Super Store, we firstly estimate the summary statistics of the dataset at hand....
+```python
+#summary statistics of the sales
+df['sales'].describe()
+```
+
+and then, we visualize the total sales recorded across the months to butress more on what to know about sales distribution.
+
+```python
+month_sales = df.groupby('month')['sales'].sum()
+month_sales.plot(marker='o', markersize=8, linestyle='-')
+plt.title('Distribution of Sales')
+plt.xticks(rotation=45)
+plt.show()
+```
+2. Profit distribution: To explore the distribution of the profit, we apply the same summary statistics step as the above...
+
+```python
+#summary statistics of the profit
+df['profit'].describe()
+```
+Furthermore, we make a box plot of the profit distribution.
+
+```python
+#boxplot for profit
+sns.boxplot(data=df['profit'])
+plt.xlabel('profit')
+plt.title('Box Plot of Profit')
+plt.show()
+```
+
+3. Most ordered product category: I grouped the products by product category and visualized the quantity ordered by product category using a bar chart, since we're talking about a categorical variable here.
+
+```python
+prod_category = df.groupby('category')['quantity'].sum()
+prod_category.plot(kind = 'bar')
+plt.xticks(rotation=45)
+plt.xlabel(' ')
+plt.ylabel('Quantity')
+plt.title(' Product Category by Quantity')
+plt.show()
+```
+Alternatively, I attempted to output the most ordered product category directly using the print function.
+
+#grouping the quantities by product category
+category_orders = df.groupby('category')['quantity'].sum()
+
+# Find the most ordered category
+most_ordered_category = category_orders.idxmax()
+print(f"The most ordered product category is: {most_ordered_category}")
+**Insight: The most ordered product category is Office Supplies**
+
+4. Most ordered Sub category: Same stroke for different folks. I applied the same steps as above to investigate the most ordered sub category of products.
+
+```
+prod_category = df.groupby('sub_category')['quantity'].sum().sort_values(ascending = False)
+prod_category.plot(kind = 'bar')
+plt.xticks(rotation=45)
+plt.xlabel(' ')
+plt.ylabel('Quantity')
+plt.title(' Product Sub_category by Quantity')
+plt.show()
+```
+Alternatively, I attempted to output the most ordered sub category directly using the **print** function.
+
+#grouping the quantities by subcategory
+sub_category_orders = df.groupby('sub_category')['quantity'].sum()
+
+# Find the most ordered category
+most_ordered_sub_category = sub_category_orders.idxmax()
+print(f"The most ordered product sub category is: {most_ordered_sub_category}")
+**Insight: The most ordered product Sub-Category is Binders, followed by paper and furnishings**
+
+5. **How are the products ordered over the years?** To go about this, 
