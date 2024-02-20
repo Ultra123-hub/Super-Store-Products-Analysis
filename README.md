@@ -1,6 +1,6 @@
 # Super-Store-Products-Analysis
 A short and rich insight into what , which,  how and 'so what' data story of Superstore products.
-![](Profit_histogram.png)
+![](discussing_statistics.jpg)
 ## Introduction
 Superstore, a medium-sized store that sells a wide range of products might just need insights into their business beyond the superficial; beyond what their intution can tell them. The goal of this analysis is to glean data-driven insights from the Superstore dataset at hand, and recommend 'so what' steps to take in redefining their sales story. This analysis makes a clear-cut dissection of the trend and pattern that concerns different aspects of the Superstore business. Key metrics including profit, revenue growth, product demand and supply, sales among others were explored and their deductions, captured for conclusions. In summary, here is a string of steps to tell a compelling story to optimize the performance of Superstore analysis.
 
@@ -23,4 +23,22 @@ Superstore, a medium-sized store that sells a wide range of products might just 
 
 ## Data Preparation
 
-First off, as we are working on Jupyter notebook, the necessary libraries were imported while making sure there is internet connection. Next, the dataset used for the analysis was loaded onto Jupyter notebook.
+First off, as we are working on Jupyter notebook, the necessary libraries were imported while making sure there is an internet connection.
+
+```python
+import pandas as pd
+import matplotlib as plt
+import seaborn as sb
+```
+Next, the dataset used for the analysis was loaded onto Jupyter notebook using the **pandas** library. But before this, I'd made sure the dataset is already available in my working directly.
+
+```python
+df = pd.read_csv("superstore_cleaned.csv")
+```
+To have at least have a visual idea of what the dataframe looks like, I called it out.
+
+```python
+df
+```
+And you have as output is this dataframe of size 9994 rows × 21 columns i.e 9994 instances of record, with 21 variables sprawled across the columns. A sneak peak below:
+![]()
