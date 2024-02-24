@@ -190,7 +190,7 @@ plt.show()
 **Insight: Super Store recorded its highest order in January, August and November. However, business was sloppy in February and September when it recorded its lowest.**
 
 6. **What is the relationship between sales, profit an quantity?**
-All numerical variables right? I created a scatter plot using saborn to visualiz th rlationship btwn sals an profit
+All numerical variables right? I created a scatter plot using seaborn to visualize the relationship btwn sales an profit
 
 ```python
 fig = plt.figure(figsize=(8, 6))
@@ -198,5 +198,44 @@ sns.scatterplot(x='sales', y='profit', size='quantity', hue='quantity', data=df)
 plt.title('Relationship between Sales, Profit, and Quantity')
 plt.show()
 ```
+**Insight: **
 
-***PIUR
+***PICTURE**
+
+7. **Category and shipped class used, show the distribution.** Here, I created a bar chart showing the distribution of ship mode by category.
+
+```python
+sns.countplot(data=df, x='category',hue='ship_mode')
+plt.title('Ship mode distribution by Category')
+plt.show()
+```
+**PICTURE**
+**Insight:**
+
+8. Most ordered category of product in each region: I simply visualized each category by region
+
+```python
+sns.countplot(data=store_data, x='region',hue='category')
+plt.title('Category distribution by Region')
+plt.show()
+```
+**PICTURE**
+**INSIGHT**
+9. Segment of buyers in each Region: A little similar to the above right? Now for each region, I am interested in the segments of buyers instead not categories.
+
+```python
+sns.countplot(data=df, x='region',hue='segment')
+plt.title('Buyers segment by Region')
+plt.show()
+```
+**Insight: **
+
+10. **Sub-categories and which category they belong to** : Now we've seen much appearance of the product categories. Perhaps we visualize their resepctive sub categories members too.
+
+```python
+sns.catplot(data=df, x='category', hue='sub_category', kind='count', height=6, aspect=1.5)
+plt.title("Distribution of sub-category by category")
+plt.show()
+```
+11. 
+```
