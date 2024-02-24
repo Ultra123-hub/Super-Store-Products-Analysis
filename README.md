@@ -230,12 +230,101 @@ plt.show()
 ```
 **Insight: **
 
-10. **Sub-categories and which category they belong to** : Now we've seen much appearance of the product categories. Perhaps we visualize their resepctive sub categories members too.
+10. **Sub-categories and which category they belong to:** Now we've seen much appearance of the product categories. Perhaps we visualize their resepctive sub categories members too.
 
 ```python
 sns.catplot(data=df, x='category', hue='sub_category', kind='count', height=6, aspect=1.5)
 plt.title("Distribution of sub-category by category")
 plt.show()
 ```
-11. 
+
+11.  **Sales made in each region:** So I started by displaying the hard figures of the sales by each region.
+
+```python
+#grouping the sales by each region
+region_sales = df.groupby('region')['sales'].sum()
+print(f"The sales of each region is: {region_sales}")
 ```
+
+***PICTURES**
+
+Next, I visualized the figures in a befitting viz:
+```python
+region_sales = df.groupby('region')['sales'].sum()
+region_sales.plot(kind = 'bar')
+plt.title('Distribution of Sales across Regions')
+plt.xlabel(' ')
+plt.xticks(rotation=45)
+plt.show()
+```
+**Insight:**
+
+12. **Profit made in each region:** You'd agree with me that this is quite similar a metric as the above. With the only chip off the block being the profit. So first, we group the profit by regio and display the figures:
+
+```python
+#grouping the sales by each region
+region_profit = df.groupby('region')['profit'].sum()
+print(f"The sales of each region is: {region_profit}")
+```
+Next, I visualized the figures in a befitting viz using seaborn:
+```python
+plt.figure(figsize=(15, 10))
+sb.barplot(data=df, x='region', y='profit', errwidth=False)
+plt.title('profit by region')
+plt.show()
+```
+
+**PICTURE**
+**Insight**
+13. Sales made from each category: I created a new column named catgory sals, displayd th figurs and visualizd it.
+
+```python
+#grouping the sales by each region
+category_sales = df.groupby('category')['sales'].sum()
+print(f"The sales of each region is: {category_sales}")
+```
+Now th vizs
+```python
+plt.figure(figsize=(15, 10))
+sb.barplot(data=df, x='category', y='sales', errwidth=False)
+plt.title('sales by category')
+plt.show()
+```
+**Insight:**
+14. **Sales made from each category: I output the hard figures and thereafter visualized the results.
+```python
+#grouping the profit by each region
+category_profit = df.groupby('category')['profit'].sum()
+print(f"The profit made in each category is: {category_profit}")
+```
+Now the vizs:
+```python
+cat_profit = store_data.groupby('category')['profit'].sum()
+cat_profit.plot(kind = 'bar')
+plt.title('Distribution of Profit across Product Category')
+plt.xlabel(' ')
+plt.xticks(rotation=45)
+plt.show()
+```
+**PICTURE**
+15. **States with loss (negative profit):** Were you expecting good business across all the states? Well, I was too. Only that Super Store has not hacked the game till that level. So here are the Ls and their magnitudes. :(
+
+To go expose the lagging states, I created a new column, store_negative_profit and output the states with negative losses
+
+```python
+# create a new dataframe for negative profit
+store_negative_profit = df[df['profit'] < 0]
+​fig = plt.figure(figsize=(15,10))
+#create a bar chart using Matplotlib
+plt.bar(store_negative_profit['state'], store_negative_profit['profit'], color='red')
+plt.xlabel(' ')
+plt.ylabel('Profit')
+plt.title('States with Negative Profit')
+plt.xticks(rotation=45)
+plt.show()
+```
+
+
+R  
+
+
