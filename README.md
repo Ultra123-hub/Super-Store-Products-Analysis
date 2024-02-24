@@ -49,16 +49,52 @@ df.dtypes
 ## Data Cleaning
 Next is to roll up our sleeves and make our data less dirty. But first, let's even check if the data is dirty at all. So to that,
 
-1. Check for missing values
+**1. Check for missing values**
 ```python
 df.isnull().sum()
 ```
-Turns out the data contained no missing value.
+output:
 
-2. Convert the date column to date data type.
+_Turns out the data contained no missing value._
+
+**2. Convert the date column to date data type.**
 ```python
 df['order_date'] = pd.to_datetime(df['order_date'])
+
+## extracting months out of it
+```python
+df['month'] = df['order_date'].dt.month_name()
+
+## sorting the months
+
+month_order = ['January', 'February', 'March','April', 'May','June', 'July', 
+'August', 'September', 'October', 'November', 'December']
+
+df['month'] = pd.Categorical(df['month'], ordered=True, 
+categories=month_order)
 ```
+**Doing the same for ship dates**
+```python
+df['ship_date'] = pd.to_datetime(df['ship_date'])
+
+## extract months from the month data
+df['month2'] = df['ship_date'].dt.month_name()
+
+## sorting the months**
+month_order = ['January', 'February', 'March','April', 'May','June', 'July', 
+'August', 'September', 'October', 'November', 'December']
+
+df['month2'] = pd.Categorical(df['month2'], ordered=True, 
+categories=month_order)
+```
+***Note: ship dates were referenced as df['month2'] as opposed df['month'] so as to create a distinction from the order dates**
+
+**3. Run a basic EDA (Explorative Data Analysis), mainly summary statistics**
+```python
+df.describe()
+```
+**PICTURE HERE**
+
 ## Analysis and Insights
 
 1. Sales distribution: To explore the distribution of sales across the range of products of Super Store, we firstly estimate the summary statistics of the dataset at hand....
@@ -68,6 +104,7 @@ df['sales'].describe()
 ```
 
 and then, we visualize the total sales recorded across the months to butress more on what to know about sales distribution.
+**Therefore, I created a new column by grouping the sales by month and plotted a line chart using matplotlib**
 
 ```python
 month_sales = df.groupby('month')['sales'].sum()
@@ -76,23 +113,27 @@ plt.title('Distribution of Sales')
 plt.xticks(rotation=45)
 plt.show()
 ```
+
+**PICTURE**
+**Insight:  **
+
 2. Profit distribution: To explore the distribution of the profit, we apply the same summary statistics step as the above...
 
 ```python
 #summary statistics of the profit
 df['profit'].describe()
 ```
-Furthermore, we make a box plot of the profit distribution.
+Furthermore, I created a new column month_profit by grouping profit by month and plotted a line chart using Matplotlib.
 
 ```python
-#boxplot for profit
-sns.boxplot(data=df['profit'])
-plt.xlabel('profit')
-plt.title('Box Plot of Profit')
+month_profit = df.groupby('month')['profit'].sum()
+month_profit.plot(marker='o', markersize=8, linestyle='-')
+plt.title('Distribution of Profit')
+plt.xticks(rotation=45)
 plt.show()
 ```
 
-3. Most ordered product category: I grouped the products by product category and visualized the quantity ordered by product category using a bar chart, since we're talking about a categorical variable here.
+3. Most ordered product category: I grouped the products by product category and visualized the quantity ordered based on each product category using a **bar chart**, since we're talking about a **categorical variable** here.
 
 ```python
 prod_category = df.groupby('category')['quantity'].sum()
@@ -134,4 +175,19 @@ most_ordered_sub_category = sub_category_orders.idxmax()
 print(f"The most ordered product sub category is: {most_ordered_sub_category}")
 **Insight: The most ordered product Sub-Category is Binders, followed by paper and furnishings**
 
-5. **How are the products ordered over the years?** To go about this, 
+5. **How are the products ordered over the year?** Way to go about this, I plotted a line graph over the 12 months in the year to show the quantity ordered over that one year-period.
+
+```python
+sns.set_style("whitegrid")
+sns.lineplot(x='month', y='quantity', data=df, marker='o', markersize=8, color='g')
+plt.xlabel(' ')
+plt.ylabel('Quantity ordered')
+plt.title('Quantity of products ordered  over time')
+plt.xticks(rotation=45)
+plt.show()
+```
+
+**Insight: Super Store recorded its highest order in January, August and November. However, business was sloppy in February and September when it recorded its lowest.**
+
+6. **What is the relationship between sales, profit an quantity?**
+All numerical variables right? I created a scatter plot using saborn to visualiz th rlationship btwn sals an profit 
