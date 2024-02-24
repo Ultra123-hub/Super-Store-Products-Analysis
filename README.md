@@ -190,4 +190,13 @@ plt.show()
 **Insight: Super Store recorded its highest order in January, August and November. However, business was sloppy in February and September when it recorded its lowest.**
 
 6. **What is the relationship between sales, profit an quantity?**
-All numerical variables right? I created a scatter plot using saborn to visualiz th rlationship btwn sals an profit 
+All numerical variables right? I created a scatter plot using saborn to visualiz th rlationship btwn sals an profit
+
+```python
+fig = plt.figure(figsize=(8, 6))
+sns.scatterplot(x='sales', y='profit', size='quantity', hue='quantity', data=df)
+plt.title('Relationship between Sales, Profit, and Quantity')
+plt.show()
+```
+
+***PIUR
