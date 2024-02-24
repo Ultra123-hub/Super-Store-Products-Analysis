@@ -1,4 +1,4 @@
-# Super-Store-Products-Analysis
+is# Super-Store-Products-Analysis
 A short and rich insight into what , which,  how and 'so what' data story of Superstore products.
 ![](discussing_statistics.jpg)
 ## Introduction
@@ -93,7 +93,7 @@ categories=month_order)
 ```python
 df.describe()
 ```
-**PICTURE HERE**
+
 
 ## Analysis and Insights
 
