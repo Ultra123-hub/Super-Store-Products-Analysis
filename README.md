@@ -324,7 +324,7 @@ plt.show()
 
 **Insight:  The Technology category generated the most profit followed closely by the office supplies category.**
 
-15. **States with loss (negative profit):** Were you expecting good business across all the states? Well, I was too. Only that Super Store has not hacked the game till that level. So here are the Ls and their magnitudes. :(
+15. **States with loss (negative profit):** Were you expecting good business across all the states? Well, I was too. Only that Super Store has not hacked the game to that level. So here are the Ls and their magnitudes. :(
 
 To go expose the lagging states, I created a new column, store_negative_profit and output the states with negative losses
 
