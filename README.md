@@ -1,8 +1,8 @@
 # Super-Store-Products-Analysis
-A short and rich insight into what , which,  how and 'so what' data story of Superstore products.
+A short and rich data story; into the sales operations of Super Store. And the performance of the products.
 ![](discussing_statistics.jpg)
 ## Introduction
-Superstore, a medium-sized store that sells a wide range of products might just need insights into their business beyond the superficial; beyond what their intution can tell them. The goal of this analysis is to glean data-driven insights from the Superstore dataset at hand, and recommend 'so what' steps to take in redefining their sales story. This analysis makes a clear-cut dissection of the trend and pattern that concerns different aspects of the Superstore business. Key metrics including profit, revenue growth, product demand and supply, sales among others were explored and their deductions, captured for conclusions. In summary, here is a string of steps to tell a compelling story to optimize the performance of Superstore analysis.
+Superstore, a medium-sized store that sells a wide range of products might just need insights into their business beyond the superficial; beyond what their intuition can tell them. The goal of this analysis is to glean data-driven insights from the Superstore dataset at hand, and recommend 'so what' steps to take in redefining their sales story. This analysis makes a clear-cut dissection of the trend and pattern that concerns different aspects of the Superstore business. Key metrics including profit, revenue growth, product demand and supply, sales among others were explored and their deductions, captured for conclusions. In summary, here is a string of steps to tell a compelling story to optimize the performance of Superstore analysis.
 
 ## Business Questions
 1.  What is the profit distribution?
@@ -44,7 +44,10 @@ And what you have as output is this dataframe of size 9994 rows × 21 columns i.
 ![](dataframe.png)
 
 Next, I checked out the data types of what I've got.
+```python
 df.dtypes
+```
+![](data_types.png)
 
 ## Data Cleaning
 Next is to roll up our sleeves and make our data less dirty. But first, let's even check if the data is dirty at all. So to that,
@@ -62,7 +65,7 @@ _Turns out the data contained no missing value._
 df['order_date'] = pd.to_datetime(df['order_date'])
 
 ## extracting months out of it
-```python
+
 df['month'] = df['order_date'].dt.month_name()
 
 ## sorting the months
@@ -97,13 +100,14 @@ df.describe()
 
 ## Analysis and Insights
 
-1. Sales distribution: To explore the distribution of sales across the range of products of Super Store, we firstly estimate the summary statistics of the dataset at hand....
+**1. Sales distribution:** To explore the distribution of sales across the range of products of Super Store, I first estimated the summary statistics of the dataset at hand...
 ```python
 #summary statistics of the sales
 df['sales'].describe()
 ```
+![](sales_summary.png)
 
-and then, we visualize the total sales recorded across the months to butress more on what to know about sales distribution.
+and then, we visualize the total sales recorded across the months to buttress more on what to know about sales distribution.
 
 **Therefore, I created a new column by grouping the sales by month and plotted a line chart using matplotlib**
 
@@ -116,15 +120,16 @@ plt.show()
 ```
 
 ![](sales_distribution.png)
-**Insight: It can be observed from the line graph above that the Super Store had The company recorded its highest sales in November followed by September and March. It recorded the least sales in February.**
+**Insight:** It can be observed from the line graph above that the Super Store had its highest sales in November, followed by September and March. It recorded the least sales in February.
 
-**2. Profit distribution: To explore the distribution of the profit, we apply the same summary statistics step as the above...**
+
+**2. Profit distribution:** To explore the distribution of the profit, we apply the same summary statistics step as the above...
 
 ```python
 #summary statistics of the profit
 df['profit'].describe()
 ```
-Furthermore, I created a new column month_profit by grouping profit by month and plotted a line chart using Matplotlib.
+Furthermore, I created a new column 'month_profit' by grouping profit by month and plotted a line chart using Matplotlib.
 
 ```python
 month_profit = df.groupby('month')['profit'].sum()
@@ -134,7 +139,8 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 ![](profit_distribution.png)
-**3. Most ordered product category: I grouped the products by product category and visualized the quantity ordered based on each product category using a bar chart, since we're talking about a categorical variable here.**
+
+**3. Most ordered product category:** I grouped the products by product category. Also, I visualized the quantity ordered based on each product category using a bar chart, since we're talking about a categorical variable here.
 
 ```python
 prod_category = df.groupby('category')['quantity'].sum()
@@ -146,6 +152,7 @@ plt.title(' Product Category by Quantity')
 plt.show()
 ```
 ![](product_category1.png)
+
 Alternatively, I attempted to output the most ordered product category directly using the print function.
 
 ```python
@@ -156,9 +163,9 @@ most_ordered_category = category_orders.idxmax()
 print(f"The most ordered product category is: {most_ordered_category}")
 ```
 
-**Insight: The most ordered product category is Office Supplies**
+**Insight:** The most ordered product category is Office Supplies.
 
-**4. Most ordered Sub-category: Well, same stroke for different folks. I applied the same steps as above to investigate the most ordered sub-category of products.**
+**4. Most ordered Sub-category:** Well, same stroke for different folks. I applied the same steps as above to investigate the most ordered sub-category of products.
 
 ```python
 prod_category = df.groupby('sub_category')['quantity'].sum().sort_values(ascending = False)
@@ -170,6 +177,7 @@ plt.title(' Product Sub_category by Quantity')
 plt.show()
 ```
 ![](product_subcategory.png)
+
 Alternatively, I attempted to directly output the most ordered subcategory using the **print** function.
 
 ```python
@@ -180,9 +188,9 @@ most_ordered_sub_category = sub_category_orders.idxmax()
 print(f"The most ordered product sub category is: {most_ordered_sub_category}")
 ```
 
-**Insight: The most ordered product Sub-Category is Binders, followed by paper and furnishings**
+**Insight:** The most ordered product Sub-Category is Binders, followed by paper and furnishings.
 
-5. **How are the products ordered over the year?** Way to go about this, I plotted a line graph over the 12 months in the year to show the quantity ordered over that one-year period.
+**5. How are the products ordered over the year?** Way to go about this, I plotted a line graph over the 12 months in the year to show the quantity ordered over that one-year period.
 
 ```python
 sns.set_style("whitegrid")
@@ -194,7 +202,8 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 ![](monthly_orders.png)
-**Insight: Super Store recorded its highest order in January, August and November. However, business was sloppy in February and September when it recorded its lowest.**
+
+**Insight:** Super Store recorded its highest order in January, August and November. However, business was sloppy in February and September when it recorded its lowest.
 
 6. **What is the relationship between sales, profit and quantity?**
 All numerical variables right? I created a scatter plot using seaborn to visualize the relationship between sales and profit infusing the quantities somewhere in between.
@@ -206,7 +215,8 @@ plt.title('Relationship between Sales, Profit, and Quantity')
 plt.show()
 ```
 ![](purple_profit.png)
-**Insight: Profit increased as sales increased for many products. Interestingly, some products with low sales even incurred negative profit i.e loss. Also, the majority of products sold in high quantities attained one-quarter of the possible sales volume. But two products ordered in relatively lower quantities performed very well in both sales and profit.**
+
+**Insight:** Profit increased as sales increased for many products. Interestingly, some products with low sales even incurred negative profit i.e loss. Also, the majority of products sold in high quantities attained one-quarter of the possible sales volume. But two products ordered in relatively lower quantities performed very well in both sales and profit.
 
 7. **Category and shipped class used, show the distribution.** Here, I created a bar chart showing the distribution of ship mode by category. Simply put, for each product category, there are ship categories in which the products came with.
 
@@ -217,9 +227,9 @@ plt.show()
 ```
 ![](product_category_ship_class.png)
 
-**Insight: Generally speaking, most of the products were shipped using standard class followed by second class.**
+**Insight:** Generally speaking, most of the products were shipped using standard class followed by second class.
 
-**8. Most ordered category of product in each region: I simply visualized each category by region. Had to peep into details of what's going on in each location.**
+**8. Most ordered category of product in each region:** I simply visualized each category by region. Had to peep into details of what's going on in each location.
 
 ```python
 sns.countplot(data=store_data, x='region',hue='category')
@@ -227,9 +237,10 @@ plt.title('Category distribution by Region')
 plt.show()
 ```
 ![](product_region.png)
-**Insight: Well, expectedly, office supplies stole the show across all regions. Followed by Furniture, of course.**
 
-**9. Segment of buyers in each Region: A little similar to the above right? Now for each region, I am interested in the segments of buyers instead not categories.**
+**Insight:** Well, expectedly, office supplies stole the show across all regions. Followed by Furniture, of course.
+
+**9. Segment of buyers in each Region:** A little similar to the above right? Now for each region, I am interested in the segments of buyers instead not categories.
 
 ```python
 sns.countplot(data=df, x='region',hue='segment')
@@ -238,9 +249,9 @@ plt.show()
 ```
 ![](segment_by_region.png)
 
-**Insight: Across all regions, Consumer has the highest stake in among all buyer segments, followed by Corporate folks and finally, Home office folks.**
+**Insight:** Across all regions, Consumer has the highest stake in among all buyer segments, followed by Corporate folks and finally, Home office folks.
 
-10. **Sub-categories and which category they belong to:** Now we've seen many appearances of the product categories. Perhaps we visualize their respective sub categories members too.
+10. **Sub-categories and which category they belong to:** Now we've seen many appearances of the product categories. Perhaps we visualize their respective sub-categories members too.
 
 ```python
 sns.catplot(data=df, x='category', hue='sub_category', kind='count', height=6, aspect=1.5)
@@ -249,7 +260,7 @@ plt.show()
 ```
 ![](distribution_by_sub_catgory.png)
 
-**Insight: The Office Supplies has the highest range of subcategories, totalling 9. Furthermore, we have got both Furniture and Technology have only four sub categories each. Generally speaking, art pieces and furnishings sold the most.**
+**Insight:** The Office Supplies has the highest range of subcategories, totalling 9. Furthermore, we have got both Furniture and Technology have only four sub categories each. Generally speaking, art pieces and furnishings sold the most.
 
 11.  **Sales made in each region:** So I started by displaying the hard figures of the sales by each region.
 
@@ -269,7 +280,8 @@ plt.xticks(rotation=45)
 plt.show()
 ```
 ![](regional_sales.png)
-**Insight: West had the highest sale across all regions, followed by the East.**
+
+**Insight:** West had the highest sale across all regions, followed by the East.
 
 12. **Profit made in each region:** You'd agree with me that this is quite similar a metric as the above. With the only chip off the block being the profit. So first, we group the profit by region and display the figures:
 
@@ -288,7 +300,7 @@ plt.show()
 ![](profit_by_region.png)
 **Insight: West region recorded the highest profit followed closely by the East region. The region with the least profit is the Central region**
 
-**13. Sales made from each category: I created a new column named category sales, displayed th figures and visualized it.**
+**13. Sales made from each category:** I created a new column named category sales, displayed the figures and visualized it.
 
 ```python
 #grouping the sales by each region
@@ -303,15 +315,16 @@ plt.title('sales by category')
 plt.show()
 ```
 ![](sales_category.png)
-**Insight: The Technology category recorded the highest sales followed closely by the Furniture category.**
 
-**14. **Profit made from each category: I output the hard figures and thereafter visualized the results.**
+**Insight:** The Technology category recorded the highest sales followed closely by the Furniture category.
+
+**14.Profit made from each category:** I output the hard figures and thereafter visualized the results.
 ```python
 #grouping the profit by each region
 category_profit = df.groupby('category')['profit'].sum()
 print(f"The profit made in each category is: {category_profit}")
 ```
-Now the vizs:
+Now the viz:
 ```python
 cat_profit = df.groupby('category')['profit'].sum()
 cat_profit.plot(kind = 'bar')
@@ -322,11 +335,11 @@ plt.show()
 ```
 ![](profit_category.png)
 
-**Insight:  The Technology category generated the most profit followed closely by the office supplies category.**
+**Insight:**  The Technology category generated the most profit followed closely by the office supplies category.
 
-15. **States with loss (negative profit):** Were you expecting good business across all the states? Well, I was too. Only that Super Store has not hacked the game to that level. So here are the Ls and their magnitudes. :(
+**15. States with loss (negative profit):** Were you expecting good business across all the states? Well, I was too. Only that Super Store has not hacked the game to that level. So here are the Ls and their magnitudes. :(
 
-To go expose the lagging states, I created a new column, store_negative_profit and output the states with negative losses
+To expose the lagging states, I created a new column, store_negative_profit and output the states with negative losses
 
 ```python
 # create a new dataframe for negative profit
@@ -342,13 +355,19 @@ plt.show()
 ```
 ![](negative_profit.png)
 
-**Insight: The state of Ohio recorded the least profit followed closely by North Carolina and Texas**
+**Insight:** The state of Ohio recorded the least profit followed closely by North Carolina and Texas.
 
 ## Recommendation
-1. Considering the company's peak sales and profits in November and December, it is advisable for the company to implement targeted marketing campaigns and promotions during these months to maximize revenue.
-2. To enhance performance in January, the company should explore strategies to maintain the positive sales momentum from the holiday season into the new year.
-3. Given the popularity of "Office Supplies" as the most ordered category and "Binders" and "Paper" as the most ordered subcategories, the company should consider diversifying the product range within these categories to leverage their high demand.
-4. The company should investigate and address the factors contributing to negative profits on large orders. Implementing cost-saving measures or pricing adjustments can help mitigate such losses.
-4. Exploring opportunities for optimizing shipping costs and delivery times can enhance customer satisfaction and potentially lead to increased sales.
-5. As the West region consistently demonstrates the highest sales and profit, allocating additional resources and intensifying marketing efforts in this region can further capitalize on its potential.
-6. Analyzing the buying behavior of consumer and corporate segments can help the company tailor marketing strategies and product offerings to their distinct needs and preferences.
+1. Considering the company's peak sales and profits in November and December, it is recommended that the company implement targeted marketing campaigns and promotions during these months to maximize revenue.
+
+3. To enhance performance in January, the company should explore strategies to maintain the positive sales momentum from the holiday season into the new year.
+
+5. Given the popularity of "Office Supplies" as the most ordered category and "Binders" and "Paper" as the most ordered subcategories, the company should consider diversifying the product range within these categories to leverage their high demand.
+
+6. The company should investigate and address the factors contributing to negative profits on large orders. Implementing cost-saving measures or pricing adjustments can help mitigate such losses.
+
+7. Exploring opportunities for optimizing shipping costs and delivery times can enhance customer satisfaction and potentially lead to increased sales.
+
+8. As the West region consistently demonstrates the highest sales and profit, allocating additional resources and intensifying marketing efforts in this region can further capitalize on its potential.
+
+9. Analyzing the buying behavior of consumer and corporate segments can help the company tailor marketing strategies and product offerings to their distinct needs and preferences.
